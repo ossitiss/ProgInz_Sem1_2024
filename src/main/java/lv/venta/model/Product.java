@@ -1,5 +1,5 @@
 package lv.venta.model;
-
+// just comment
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
