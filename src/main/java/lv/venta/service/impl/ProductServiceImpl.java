@@ -19,44 +19,77 @@ public class ProductServiceImpl implements
 	
 	@Override
 	public void create(Product product) {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Product retrieveById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Product> retrieveAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateById(int id, Product product) {
-		// TODO Auto-generated method stub
+		Product existedProduct = productRepo.findByTitleAndDescriptionAndPrice(product.getTitle(),product.getDescription(),product.getPrice());
 		
+		if(existedProduct != null) {
+			existedProduct.setQuantity(existedProduct.getQuantity() + product.getQuantity());
+			
+		}
+				
+		productRepo.save(product);
 	}
 
 	@Override
-	public void deleteById(int id) {
-		// TODO Auto-generated method stub
+	public Product retrieveById(int id) throws Exception{
+		if(id < 0) throw new Exception("Id should be positive");
 		
+		if(productRepo.existsById(id))
+		{
+			return productRepo.findById(id).get();
+		}
+		else
+		{
+			throw new Exception("Product with this id ("+id+") is not in the system");
+		}
+	}
+
+	@Override
+	public ArrayList<Product> retrieveAll() throws Exception{
+		//TODO izmest izmaiņu, ja ir tukša tabula
+		if(productRepo.count() == 0) throw new Exception("There is no product in the system");
+			
+		// TODO pretējā gadījumāsa ameklt visus ierakstus no repo (DB)
+		return (ArrayList<Product>) productRepo.findAll();
+	}
+
+	@Override
+	public void updateById(int id, Product product) throws Exception{
+		Product productForUpdating = retrieveById(id);
+		
+		productForUpdating.setTitle(product.getTitle());
+		productForUpdating.setDescription(product.getDescription());
+		productForUpdating.setPrice(product.getPrice());
+		productForUpdating.setQuantity(product.getQuantity());
+
+		productRepo.save(productForUpdating);	
+	}
+
+	@Override
+	public void deleteById(int id) throws Exception {
+		Product productForDeleting = retrieveById(id);
+
+		productRepo.delete(productForDeleting);			
 	}
 	
 	@Override
-	public ArrayList<Product> filterByPriceLess(float threshold) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Product> filterByPriceLess(float threshold) throws Exception {
+		if(threshold <= 0) throw new Exception("Price should be positive");
+		
+		if(productRepo.count() == 0) throw new Exception("There is no product in the system");
+		
+		ArrayList<Product> filteredProducts = productRepo.findByPriceLessThan(threshold);
+		return filteredProducts;
 	}
 
 	@Override
-	public ArrayList<Product> filterByQuantityLess(int threshold) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Product> filterByQuantityLess(int threshold) throws Exception {
+		if(threshold <= 0) throw new Exception("Threshold wrong");
+		
+		if(productRepo.count() == 0) throw new Exception("There is no product in the system");
+		
+		ArrayList<Product> filteredProducts = productRepo.findByQuantityLessThan(threshold);
+		return filteredProducts;
 	}
 
 	@Override
