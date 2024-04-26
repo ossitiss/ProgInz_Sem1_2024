@@ -12,7 +12,7 @@ public interface IProductCRUDService {
 	
 	public abstract ArrayList<Product> retrieveAll();
 	
-	public abstract void update(int id, Product product);
+	public abstract void updateById(int id, Product product);
 	
 	public abstract void deleteById (int id);
 
