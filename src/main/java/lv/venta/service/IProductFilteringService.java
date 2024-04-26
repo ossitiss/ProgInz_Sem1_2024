@@ -8,11 +8,11 @@ public interface IProductFilteringService {
 	
 	public abstract ArrayList<Product> filterByPriceLess (float threshold) throws Exception;
 	
-	public abstract ArrayList<Product> filterByQuantityLess (int threshold)  throws Exception;
+	public abstract ArrayList<Product> filterByQuantityLess (int threshold) throws Exception;
 	
-	public abstract ArrayList<Product> filterByTitleOrDescription (String phrase);
+	public abstract ArrayList<Product> filterByTitleOrDescription (String phrase, String phrase2) throws Exception;
 	
-	public abstract float calculateTotalValueOfProducts ();
+	public abstract float calculateTotalValueOfProducts () throws Exception;
 	
 
 }

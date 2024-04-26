@@ -93,15 +93,22 @@ public class ProductServiceImpl implements
 	}
 
 	@Override
-	public ArrayList<Product> filterByTitleOrDescription(String phrase) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Product> filterByTitleOrDescription(String phrase, String phrase2) throws Exception  {
+		if(phrase == null) throw new Exception("Product is with null adress");
+		
+		if(productRepo.count() == 0) throw new Exception("There is no product in system");
+		
+		ArrayList<Product> filteredProducts = productRepo.findByTitleIgnoreCaseLikeOrDescriptionIgnoreCaseLike(String phrase, String phrase2);
+		return filteredProducts;
 	}
 
 	@Override
-	public float calculateTotalValueOfProducts() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float calculateTotalValueOfProducts() throws Exception {
+		if(productRepo.count() == 0) throw new Exception("There is no product in system");
+		
+		float totalValue = productRepo.calculateTotalValueFromRepoProducts();
+		
+		return totalValue;
 	}
 
 
