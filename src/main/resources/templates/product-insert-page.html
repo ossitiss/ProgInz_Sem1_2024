@@ -1,8 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
-		<td>
+		<body>
 			<p>Please insert product</p>
 			
-			<form th:action = "@{/product/crud/insert}" method="post" th:object="${product}>
+			<form th:action = "@{/product/crud/insert}" method="post" th:object="${product}">
 				
 				<table>
 					<tr>
@@ -26,6 +26,8 @@
 					</tr>
 					
 				</table>
+				
+				<button type="submit"> Save </button>
 			
 			</form>
 		
