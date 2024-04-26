@@ -30,11 +30,5 @@ public interface IProductRepo extends CrudRepository<Product, Integer>{
 	//bet vaicajumu veidojam paši
 	@Query(nativeQuery = true, value = "SELECT SUM(price * quantity) FROM product_table;")
 	float calculateTotalValueFromRepoProducts();
-
-	
-	
-	
-	
-	
 	
 }

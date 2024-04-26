@@ -93,12 +93,12 @@ public class ProductServiceImpl implements
 	}
 
 	@Override
-	public ArrayList<Product> filterByTitleOrDescription(String phrase, String phrase2) throws Exception  {
+	public ArrayList<Product> filterByTitleOrDescription(String phrase, String phrase2) throws Exception {
 		if(phrase == null) throw new Exception("Product is with null adress");
 		
 		if(productRepo.count() == 0) throw new Exception("There is no product in system");
 		
-		ArrayList<Product> filteredProducts = productRepo.findByTitleIgnoreCaseLikeOrDescriptionIgnoreCaseLike(String phrase, String phrase2);
+		ArrayList<Product> filteredProducts = productRepo.findByTitleIgnoreCaseLikeOrDescriptionIgnoreCaseLike(phrase, phrase2);
 		return filteredProducts;
 	}
 
@@ -110,6 +110,5 @@ public class ProductServiceImpl implements
 		
 		return totalValue;
 	}
-
 
 }

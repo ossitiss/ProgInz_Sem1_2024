@@ -14,5 +14,4 @@ public interface IProductFilteringService {
 	
 	public abstract float calculateTotalValueOfProducts () throws Exception;
 	
-
 }

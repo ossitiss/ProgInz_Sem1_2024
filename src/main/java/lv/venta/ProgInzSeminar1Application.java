@@ -42,7 +42,9 @@ public class ProgInzSeminar1Application {
 				productRepo.save(productForUpdating);
 				
 			}
+			
 		};
+		
 	}
-
+	
 }
