@@ -77,11 +77,42 @@ public class ProductCRUDController {
 			crudService.create(product);
 			return "redirect:/product/crud/all";
 		}
-		
-		//System.out.println(product);
-		
+		//System.out.println(product);	
 	}
 	
+	@GetMapping("/update/{id}") //localhost:8080/product/crud/update/1
+	public String getProductCRUDUpdateById(@PathVariable("id") int id, Model model) {
+		
+		try {
+			Product productForUpdating = crudService.retrieveById(id);
+			model.addAttribute("product", productForUpdating);
+			model.addAttribute("id", id);
+			return "product-update-page";
+		}
+		catch (Exception e) {
+			model.addAttribute("mydata", e.getMessage());
+			return "error-page";
+		}
+	}
 	
+	@PostMapping("/update/{id}")
+	public String postProductCRUDUpdateById(@PathVariable("id") int id, @Valid Product product, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return "product-update-page";
+		}
+		else {
+			try {
+			crudService.updateById(id, product);
+			return "redirect:/product/crud/all/" + id;
+		}
+		catch (Exception e) {
+			model.addAttribute("mydata", e.getMessage());
+			return "error-page";
+		}
+			
+		}
+		
+	}
 	
 }
