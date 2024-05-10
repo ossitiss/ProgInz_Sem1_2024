@@ -98,7 +98,7 @@ public class ProductServiceImpl implements
 		
 		if(productRepo.count() == 0) throw new Exception("There is no product in system");
 		
-		ArrayList<Product> filteredProducts = productRepo.findByTitleIgnoreCaseLikeOrDescriptionIgnoreCaseLike(phrase, phrase2);
+		ArrayList<Product> filteredProducts = productRepo.findByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(phrase, phrase2);
 		return filteredProducts;
 	}
 
