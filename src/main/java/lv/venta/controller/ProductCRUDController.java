@@ -1,5 +1,7 @@
 package lv.venta.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,24 +97,41 @@ public class ProductCRUDController {
 		}
 	}
 	
+
 	@PostMapping("/update/{id}")
-	public String postProductCRUDUpdateById(@PathVariable("id") int id, @Valid Product product, BindingResult result, Model model) {
-		
-		if(result.hasErrors()) {
+	public String postProductCRUDUpdateById(@PathVariable("id") int id, @Valid Product product, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
 			return "product-update-page";
-		}
-		else {
+		} else {
+
 			try {
-			crudService.updateById(id, product);
-			return "redirect:/product/crud/all/" + id;
-		}
-		catch (Exception e) {
-			model.addAttribute("mydata", e.getMessage());
-			return "error-page";
-		}
+				crudService.updateById(id, product);
+				return "redirect:/product/crud/all/" + id; // pārlecu uz /product/crud/all/{id} galapunktu
+			} catch (Exception e) {
+				model.addAttribute("mydata", e.getMessage());
+				return "error-page";
+			}
 			
 		}
+
+	}
+			
+		//TODO
+	@GetMapping("/delete/{id}")//localhost:8080/product/crud/delete/1
+	public String getProductCRUDDeleteById(@PathVariable("id") int id, Model model) {
+			
+		try {
+			crudService.deleteById(id);
+			ArrayList<Product> allProducts = crudService.retrieveAll();
+			model.addAttribute("mydata", allProducts);
+			return "product-show-all-page";// tiks parādīta producty-show-all-page.html ar visiem produktiem
 		
+			} catch (Exception e) {
+				model.addAttribute("mydata", e.getMessage());
+				return "error-page";
+			}
+			
 	}
 	
 }
